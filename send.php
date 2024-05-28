@@ -12,13 +12,13 @@ if(isset($_POST["send"])){ // Check if the form is submitted
     $mail->isSMTP(); // Set the mailer to use SMTP
     $mail->Host = 'smtp.gmail.com'; // Set the SMTP server hostname
     $mail->SMTPAuth = true; // Enable SMTP authentication
-    $mail->Username = 'uchihareikata@gmail.com'; // SMTP username (your Gmail address)
-    $mail->Password = 'qyki jszw moov wvhz'; // SMTP password (your Gmail password)
+    $mail->Username = 'reikatauchiha@gmail.com'; // SMTP username (your Gmail address)
+    $mail->Password = 'rhlt zyks rwyc mzpf'; // SMTP password (your Gmail password)
     $mail->SMTPSecure = 'ssl'; // Enable SSL encryption for SMTP secure connection
     $mail->Port = 465; // Set the SMTP port for Gmail
 
     // Set sender email address
-    $mail->setFrom('uchihareikata@gmail.com', 'Email Verification');
+    $mail->setFrom('reikatauchiha@gmail.com', 'Email Verification');
 
     // Add recipient dynamically from form data
     $recipient_email = $_POST['recipient_email'];

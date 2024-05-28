@@ -42,11 +42,11 @@ if (isset($_POST['login'])) {
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'uchihareikata@gmail.com';
-        $mail->Password = 'qyki jszw moov wvhz';
+        $mail->Username = 'reikatauchiha@gmail.com';
+        $mail->Password = 'rhlt zyks rwyc mzpf';
         $mail->SMTPSecure = 'ssl';
         $mail->Port = 465;
-        $mail->setFrom('uchihareikata@gmail.com', 'Russells Website');
+        $mail->setFrom('reikatauchiha@gmail.com', 'Russells Website');
         $mail->addAddress($email);
         $mail->isHTML(true);
         $mail->Subject = "Verification Code";
