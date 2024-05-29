@@ -60,8 +60,8 @@ if (isset($_POST['register'])) { // Check if the registration form is submitted
             $mail->isSMTP(); // Set the mailer to use SMTP
             $mail->Host = 'smtp.gmail.com'; // Set the SMTP server hostname
             $mail->SMTPAuth = true; // Enable SMTP authentication
-            $mail->Username = 'reikatauchiha@gmail.com';
-            $mail->Password = 'rhlt zyks rwyc mzpf';
+            $mail->Username = 'reikatauchiha@gmail.com';//servers username/email
+            $mail->Password = 'rhlt zyks rwyc mzpf';//app password from the server
             $mail->SMTPSecure = 'ssl'; // Enable SSL encryption for SMTP secure connection
             $mail->Port = 465; // Set the SMTP port for Gmail
             $mail->setFrom('reikatauchiha@gmail.com', 'Email Verification'); // Set the sender's email address and name

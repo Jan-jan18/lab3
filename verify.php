@@ -14,9 +14,8 @@ if (isset($_POST['verify'])) {
     $verification_code = $_POST['verification_code'];
 
     // Perform verification of the verification code here
-    // You can retrieve the verification code from the email and compare it with the one provided by the user
 
-    // Example: Check if the verification code matches a predefined value (replace with your logic)
+   
     $expected_verification_code = $_SESSION['verification_code']; // Retrieve the verification code from session
     if ($verification_code == $expected_verification_code) {
         // If verification successful, update status in the database to "verified"
@@ -27,7 +26,7 @@ if (isset($_POST['verify'])) {
         }
 
         $user_id = $_SESSION['user_id'];
-        $stmt->bind_param("i", $user_id); // Assuming user_id is an integer, adjust the type ("i") accordingly if it's not
+        $stmt->bind_param("i", $user_id); // Assuming user_id is an integer
         if (!$stmt->execute()) {
             die("Error executing statement: " . $stmt->error);
         }

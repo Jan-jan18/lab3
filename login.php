@@ -1,65 +1,65 @@
 <?php
-session_start();
-include "db_conn.php";
+session_start(); //starts the session 
+include "db_conn.php"; // includes the database connection 
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;// import the php mailer class    
+use PHPMailer\PHPMailer\Exception; // Import Exception class
 
-require 'phpmailer/src/Exception.php';
-require 'phpmailer/src/PHPMailer.php';
-require 'phpmailer/src/SMTP.php';
+require 'phpmailer/src/Exception.php'; // Include Exception class file
+require 'phpmailer/src/PHPMailer.php'; // Include PHPMailer class file
+require 'phpmailer/src/SMTP.php'; // Include SMTP class file
 
-if (isset($_GET['logout']) && $_GET['logout'] == 'success') {
-    $_SESSION['message'] = "Logged out successfully";
-    $_SESSION['alert_type'] = "success";
+if (isset($_GET['logout']) && $_GET['logout'] == 'success') { //for the logout, it checks if the user comes from welcome.php and clicked log out
+    $_SESSION['message'] = "Logged out successfully"; // shows the message if the user is logged out
+    $_SESSION['alert_type'] = "success"; // success 
 }
 
-if (isset($_POST['login'])) {
-    $email = $_POST['email'];
-    $pass = $_POST['password'];
+if (isset($_POST['login'])) {     //check if the login is submitted
+    $email = $_POST['email']; // sanitize 
+    $pass = $_POST['password']; // 
 
     // Generate random verification code
     $verification_code = mt_rand(100000, 999999);
 
-    $sql = "SELECT * FROM user WHERE email=? AND password=?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $email, $pass);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $sql = "SELECT * FROM user WHERE email=? AND password=?"; // query the database for user credentials
+    $stmt = $conn->prepare($sql); //prepares the statement
+    $stmt->bind_param("ss", $email, $pass); // 
+    $stmt->execute(); // execute the prepared statement
+    $result = $stmt->get_result(); 
 
     if ($result->num_rows === 1) {
         $row = $result->fetch_assoc();
-        $_SESSION['user_id'] = $row['user_id'];
-        $_SESSION['fname'] = $row['First_name'];
-        $_SESSION['lname'] = $row['Lastname'];
-        $_SESSION['email'] = $row['email'];
+        $_SESSION['user_id'] = $row['user_id'];// stores users id
+        $_SESSION['fname'] = $row['First_name'];//stores the first name in session
+        $_SESSION['lname'] = $row['Lastname']; //stores the last name in session
+        $_SESSION['email'] = $row['email']; //stores the email in session
         $_SESSION['verification_code'] = $verification_code; // Store verification code in session
 
-        $_SESSION['alert_type'] = "success";
+        $_SESSION['alert_type'] = "success"; //set success alert type
 
         // Send email with verification code
-        $mail = new PHPMailer(true);
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'reikatauchiha@gmail.com';
-        $mail->Password = 'rhlt zyks rwyc mzpf';
-        $mail->SMTPSecure = 'ssl';
-        $mail->Port = 465;
-        $mail->setFrom('reikatauchiha@gmail.com', 'Russells Website');
-        $mail->addAddress($email);
-        $mail->isHTML(true);
-        $mail->Subject = "Verification Code";
-        $mail->Body = "Your verification code is: $verification_code";
-        $mail->send();
+        $mail = new PHPMailer(true);// create a new instance of phpmailer class for sending mails
+        $mail->isSMTP(); //set the mailer to use SMTP
+        $mail->Host = 'smtp.gmail.com';// it sets the SMTP server hostname
+        $mail->SMTPAuth = true;// Enable SMTP authentication
+        $mail->Username = 'reikatauchiha@gmail.com';//servers username/email
+        $mail->Password = 'rhlt zyks rwyc mzpf'; // app password from the server
+        $mail->SMTPSecure = 'ssl';// enable SSL encryption for smtp secure connection
+        $mail->Port = 465;//SMTP port for gmail
+        $mail->setFrom('reikatauchiha@gmail.com', 'Russells Website');//Set the senders email and name
+        $mail->addAddress($email);//add recipient email address
+        $mail->isHTML(true);//set email format to html
+        $mail->Subject = "Verification Code";// the subject of the mail
+        $mail->Body = "Your verification code is: $verification_code"; //the code from the verification
+        $mail->send();//sends the mail
 
-        header("Location: verify.php");
+        header("Location: verify.php"); // goes to verify.php
         exit();
     } else {
-        $_SESSION['message'] = "Incorrect email or password";
-        $_SESSION['alert_type'] = "error";
+        $_SESSION['message'] = "Incorrect email or password"; // msg if the email or password is incorrect
+        $_SESSION['alert_type'] = "error";// error alert type
         // Redirect back to login page with error message
-        header("Location: login.php");
+        header("Location: login.php");// redirects to login.php
         exit();
     }
 }
@@ -102,10 +102,10 @@ if (isset($_POST['login'])) {
     <div class="login-container">
         <h2>Log In</h2>
         <?php if (isset($_SESSION['message'])): ?>
-            <div class="message-container <?php echo $_SESSION['alert_type']; ?>">
+            <div class="message-container <?php echo $_SESSION['alert_type']; ?>">  <!--Display alert type-->
                 <?php 
-                echo $_SESSION['message']; 
-                unset($_SESSION['message']); 
+                echo $_SESSION['message']; //display the session message
+                unset($_SESSION['message']); // clear the session message after displaying
                 ?> 
             </div>
             <?php unset($_SESSION['alert_type']); ?>
