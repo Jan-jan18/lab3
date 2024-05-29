@@ -13,7 +13,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == 'success') { //for the logout, 
     $_SESSION['message'] = "Logged out successfully"; // shows the message if the user is logged out
     $_SESSION['alert_type'] = "success"; // success 
 }
-
+    
 if (isset($_POST['login'])) {     //check if the login is submitted
     $email = $_POST['email']; // sanitize 
     $pass = $_POST['password']; // 

@@ -22,25 +22,25 @@ if (isset($_POST['verify'])) {
         $update_status_query = "UPDATE user SET Status='Verified' WHERE user_id=?";
         $stmt = $conn->prepare($update_status_query);
         if (!$stmt) {
-            die("Error preparing statement: " . $conn->error);
+            die("Error preparing statement: " . $conn->error); //if theres an error
         }
-
-        $user_id = $_SESSION['user_id'];
+// this process if for making the database change if the user is veried, it will says verified in the database, and not verify if not
+        $user_id = $_SESSION['user_id']; //checks whats the users  user_id
         $stmt->bind_param("i", $user_id); // Assuming user_id is an integer
-        if (!$stmt->execute()) {
-            die("Error executing statement: " . $stmt->error);
+        if (!$stmt->execute()) { // execute
+            die("Error executing statement: " . $stmt->error);// for error if theres an error in the statement
         }
 
         // Set success message
-        $_SESSION['message'] = "Verification successful";
-        $_SESSION['alert_type'] = "success";
-        header("Location: welcome.php");
+        $_SESSION['message'] = "Verification successful"; //says the message if the verification is a success
+        $_SESSION['alert_type'] = "success"; //alert type success
+        header("Location: welcome.php"); //goes to welcome.php after verifying successfully
         exit();
     } else {
         // If verification fails, set error message and redirect to verify.php
-        $_SESSION['message'] = "Incorrect verification code";
-        $_SESSION['alert_type'] = "error";
-        header("Location: verify.php");
+        $_SESSION['message'] = "Incorrect verification code";// says the message if the verification is not successfull
+        $_SESSION['alert_type'] = "error"; //alert type error
+        header("Location: verify.php");//reloads to verify.php if the code is wrong 
         exit();
     }
 }
